@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  
+  --font-sans: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  --font-mono: var(--font-geist-mono);
+}
+
+:root {
+  /* Premium Off-White & Light Green Aesthetic */
+  --background: #f8fbf9; /* Ultra-light off-white with a breath of green */
+  --foreground: #064e3b; /* Deep lush emerald text (near black) */
+  --card: #ffffff;       /* Pure white cards for strong contrast */
+  --card-foreground: #064e3b;
+  --primary: #10b981;    /* Vibrant Emerald primary */
+  --primary-foreground: #ffffff;
+  --muted: #e8f5ed;      /* Very soft subtle green for muted areas */
+  --muted-foreground: #059669; /* Emerald 600 */
+  --border: #d1fae5;     /* Emerald 100 for very soft borders */
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  /* Premium breathable gradient overlay */
+  background-image: radial-gradient(circle at 15% 50%, rgba(16, 185, 129, 0.08), transparent 25%),
+                    radial-gradient(circle at 85% 30%, rgba(52, 211, 153, 0.08), transparent 25%);
+  background-attachment: fixed;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 25s linear infinite;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px 0 rgba(4, 120, 87, 0.05);
+}
+
+.dark .glass {
+  background: rgba(6, 78, 59, 0.4);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(52, 211, 153, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Beautiful custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 8px;
+  border: 2px solid var(--background);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #059669;
+}
