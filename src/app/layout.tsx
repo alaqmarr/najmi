@@ -5,6 +5,7 @@ import { Navbar } from "@/components/ui/Navbar";
 import { Footer } from "@/components/ui/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
+export const preferredRegion = ['sin1']
 
 export const metadata: Metadata = {
   title: "Najmi Industrial Corporation | Precision Hardware",
