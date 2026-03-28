@@ -108,3 +108,53 @@ export async function deleteProduct(id: string) {
     return { error: error.message };
   }
 }
+
+// --- Update actions ---
+export async function updateCategory(id: string, data: { name: string }) {
+  try {
+    await prisma.category.update({
+      where: { id },
+      data: { name: data.name },
+    });
+    revalidatePath("/admin/categories");
+    return { success: true };
+  } catch (error: any) {
+    return { error: error.message };
+  }
+}
+
+export async function updateBrand(id: string, data: { name: string; image?: string | null }) {
+  try {
+    await prisma.brand.update({
+      where: { id },
+      data: { name: data.name, image: data.image || null },
+    });
+    revalidatePath("/admin/brands");
+    return { success: true };
+  } catch (error: any) {
+    return { error: error.message };
+  }
+}
+
+export async function updateProduct(id: string, data: any) {
+  const { name, description, image, categoryId, brandId, status } = data;
+  if (!name || !categoryId || !brandId) return { error: "Missing required fields" };
+
+  try {
+    await prisma.product.update({
+      where: { id },
+      data: {
+        name,
+        description,
+        image,
+        categoryId,
+        brandId,
+        status: status || "PUBLISHED",
+      },
+    });
+    revalidatePath("/admin/products");
+    return { success: true };
+  } catch (error: any) {
+    return { error: error.message };
+  }
+}
