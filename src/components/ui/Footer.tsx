@@ -61,14 +61,14 @@ export const Footer = () => {
               </li>
               <li className="flex items-center gap-4 group">
                 <Phone className="h-5 w-5 text-primary shrink-0" />
-                <a href="tel:+919849012345" className="group-hover:text-white transition-colors font-medium">
-                  +91 98490 12345
+                <a href="tel:+919398190254" className="group-hover:text-white transition-colors font-medium">
+                  +91 93981 90254
                 </a>
               </li>
               <li className="flex items-center gap-4 group">
                 <Mail className="h-5 w-5 text-primary shrink-0" />
-                <a href="mailto:info@najmiindustrial.com" className="group-hover:text-white transition-colors font-medium">
-                  info@najmiindustrial.com
+                <a href="mailto:contact@najmionline.com" className="group-hover:text-white transition-colors font-medium">
+                  contact@najmionline.com
                 </a>
               </li>
             </ul>

@@ -5,7 +5,7 @@ import { FaWhatsapp } from "react-icons/fa";
 import { generateWhatsAppLink } from "@/lib/whatsapp";
 
 export default function ContactPage() {
-  const whatsappLink = generateWhatsAppLink(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "919849012345", "Hello Najmi Industrial Corporation!");
+  const whatsappLink = generateWhatsAppLink(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "919398190254", "Hello Najmi Industrial Corporation!");
 
   return (
     <div className="bg-background min-h-screen pb-24">
@@ -47,7 +47,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <h4 className="font-bold text-lg mb-1">Direct Lines</h4>
-                      <p className="text-primary-foreground/70 font-medium leading-relaxed">+91 98490 12345 <br/> +91 40 2345 6789</p>
+                      <p className="text-primary-foreground/70 font-medium leading-relaxed">+91 93981 90254</p>
                     </div>
                   </div>
 
@@ -57,7 +57,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <h4 className="font-bold text-lg mb-1">Electronic Mail</h4>
-                      <p className="text-primary-foreground/70 font-medium leading-relaxed">info@najmiindustrial.com <br/> sales@najmiindustrial.com</p>
+                      <p className="text-primary-foreground/70 font-medium leading-relaxed">contact@najmionline.com</p>
                     </div>
                   </div>
                   

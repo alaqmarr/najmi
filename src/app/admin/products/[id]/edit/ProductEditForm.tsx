@@ -9,6 +9,10 @@ export default function ProductEditForm({ product, categories, brands }: { produ
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [image, setImage] = useState(product.image || "");
+  const [selectedCategoryId, setSelectedCategoryId] = useState(product.categoryId);
+
+  const selectedCategory = categories.find((c: any) => c.id === selectedCategoryId);
+  const subCategories = selectedCategory?.subCategories || [];
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -17,6 +21,7 @@ export default function ProductEditForm({ product, categories, brands }: { produ
     const data = {
       name: formData.get("name"),
       categoryId: formData.get("categoryId"),
+      subCategoryId: formData.get("subCategoryId") || null,
       brandId: formData.get("brandId"),
       description: formData.get("description"),
       status: formData.get("status"),
@@ -51,7 +56,8 @@ export default function ProductEditForm({ product, categories, brands }: { produ
           <label className="block text-sm font-bold mb-2">Category *</label>
           <select
             name="categoryId"
-            defaultValue={product.categoryId}
+            value={selectedCategoryId}
+            onChange={(e) => setSelectedCategoryId(e.target.value)}
             required
             className="w-full rounded-xl border border-input p-3 bg-background focus:ring-2 focus:ring-primary outline-none font-medium"
           >
@@ -61,6 +67,22 @@ export default function ProductEditForm({ product, categories, brands }: { produ
             ))}
           </select>
         </div>
+
+        {subCategories.length > 0 && (
+          <div>
+            <label className="block text-sm font-bold mb-2">Subcategory</label>
+            <select
+              name="subCategoryId"
+              defaultValue={product.subCategoryId || ""}
+              className="w-full rounded-xl border border-input p-3 bg-background focus:ring-2 focus:ring-primary outline-none font-medium"
+            >
+              <option value="">None</option>
+              {subCategories.map((sc: any) => (
+                <option key={sc.id} value={sc.id}>{sc.name}</option>
+              ))}
+            </select>
+          </div>
+        )}
 
         <div>
           <label className="block text-sm font-bold mb-2">Brand *</label>

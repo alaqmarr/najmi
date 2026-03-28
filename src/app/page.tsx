@@ -2,7 +2,7 @@ import { HeroSection } from "@/components/ui/HeroSection";
 import { InfiniteBrandScroller } from "@/components/ui/InfiniteBrandScroller";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
-import { ArrowRight, Layers } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { HomeProductList } from "@/components/ui/HomeProductList";
 
@@ -52,28 +52,27 @@ export default async function Home() {
               </div>
             </FadeIn>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {categories.map((category, idx) => (
                 <FadeIn key={category.id} delay={0.1 * idx} direction="up">
                   <Link 
                     href={`/categories/${category.slug}`}
-                    className="group flex flex-col justify-center p-5 rounded-3xl relative overflow-hidden h-32 shadow-md hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-1 transition-all duration-300"
+                    className="group block rounded-2xl relative overflow-hidden h-40 shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
                   >
-                    {/* Colorful Vibrant Gradient Background */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary via-emerald-500 to-green-400 opacity-90 group-hover:opacity-100 transition-opacity z-0"></div>
+                    {/* Background Image or Fallback */}
+                    {category.image ? (
+                      <img src={category.image} alt={category.name} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    ) : (
+                      <div className="absolute inset-0 bg-gradient-to-br from-primary via-emerald-500 to-green-400"></div>
+                    )}
                     
-                    {/* Decorative Elements */}
-                    <div className="absolute -top-4 -right-4 w-24 h-24 bg-white/20 rounded-full blur-xl z-0 group-hover:scale-150 transition-transform duration-700"></div>
+                    {/* Dark gradient overlay for text readability */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
                     
-                    <div className="relative z-10 flex items-center gap-3 text-white">
-                      <div className="shrink-0 h-10 w-10 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30 shadow-inner group-hover:rotate-12 group-hover:scale-110 transition-all duration-500">
-                         <Layers className="h-5 w-5 text-white" />
-                      </div>
-                      
-                      <div className="flex flex-col">
-                        <h3 className="text-lg font-black leading-tight drop-shadow-sm truncate">{category.name}</h3>
-                        <p className="text-white/90 font-bold text-[10px] bg-black/20 px-2 py-0.5 rounded-full w-max mt-1 tracking-widest uppercase shadow-inner">{category._count.products} Prod</p>
-                      </div>
+                    {/* Text content */}
+                    <div className="absolute bottom-0 left-0 right-0 p-4 text-white relative z-10">
+                      <h3 className="text-lg font-black leading-tight drop-shadow-md truncate">{category.name}</h3>
+                      <p className="text-white/80 font-bold text-xs mt-0.5">{category._count.products} Products</p>
                     </div>
                   </Link>
                 </FadeIn>

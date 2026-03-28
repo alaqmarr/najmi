@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Pencil, Trash2, FolderOpen, Plus, Search } from "lucide-react";
+import { Pencil, Trash2, FolderOpen, Plus } from "lucide-react";
 import { useState } from "react";
 
 export default function CategoriesClient({ categories }: { categories: any[] }) {
@@ -10,7 +10,7 @@ export default function CategoriesClient({ categories }: { categories: any[] }) 
   const [deleting, setDeleting] = useState<string | null>(null);
 
   async function handleDelete(id: string, name: string) {
-    if (!confirm(`Are you sure you want to delete "${name}"? This cannot be undone.`)) return;
+    if (!confirm(`Delete "${name}" and all its subcategories? This cannot be undone.`)) return;
     setDeleting(id);
     try {
       const res = await fetch(`/api/admin/categories/${id}`, { method: "DELETE" });
@@ -32,7 +32,7 @@ export default function CategoriesClient({ categories }: { categories: any[] }) 
         <div className="absolute top-0 right-0 -mt-10 -mr-10 h-40 w-40 bg-primary/20 blur-3xl rounded-full pointer-events-none"></div>
         <div className="relative z-10">
           <h1 className="text-2xl sm:text-3xl font-black text-foreground tracking-tight mb-1">Category Management</h1>
-          <p className="text-foreground/60 font-medium text-sm">Organize your product inventory.</p>
+          <p className="text-foreground/60 font-medium text-sm">Organize your product inventory with subcategories.</p>
         </div>
         <Link 
           href="/admin/categories/new" 
@@ -44,11 +44,11 @@ export default function CategoriesClient({ categories }: { categories: any[] }) 
 
       <div className="bg-card rounded-2xl shadow-lg border border-border overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse min-w-[500px]">
+          <table className="w-full text-left border-collapse min-w-[550px]">
             <thead>
               <tr className="bg-muted/50 text-foreground/60 text-xs uppercase tracking-widest font-bold">
-                <th className="px-5 py-4">Name</th>
-                <th className="px-5 py-4">Slug</th>
+                <th className="px-5 py-4">Category</th>
+                <th className="px-5 py-4">Subcategories</th>
                 <th className="px-5 py-4">Products</th>
                 <th className="px-5 py-4 text-right">Actions</th>
               </tr>
@@ -58,18 +58,33 @@ export default function CategoriesClient({ categories }: { categories: any[] }) 
                 <tr key={cat.id} className="hover:bg-primary/5 transition-colors group">
                   <td className="px-5 py-4">
                     <div className="flex items-center gap-3">
-                      <div className="h-9 w-9 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0">
-                         <FolderOpen className="h-4 w-4" />
+                      {cat.image ? (
+                        <div className="h-10 w-16 rounded-lg overflow-hidden bg-muted border border-border shrink-0">
+                          <img src={cat.image} alt={cat.name} className="w-full h-full object-cover" />
+                        </div>
+                      ) : (
+                        <div className="h-10 w-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                           <FolderOpen className="h-4 w-4" />
+                        </div>
+                      )}
+                      <div>
+                        <span className="font-bold text-sm text-foreground group-hover:text-primary transition-colors block">{cat.name}</span>
+                        <span className="text-[10px] text-foreground/40">{cat.slug}</span>
                       </div>
-                      <span className="font-bold text-sm text-foreground group-hover:text-primary transition-colors">{cat.name}</span>
                     </div>
                   </td>
                   <td className="px-5 py-4">
-                    <span className="text-xs font-medium text-foreground/50 bg-muted/50 rounded-md px-2 py-0.5">{cat.slug}</span>
+                    {cat._count?.subCategories > 0 ? (
+                      <span className="inline-flex items-center px-3 py-1 rounded-full bg-amber-500/10 text-amber-600 font-bold text-xs">
+                        {cat._count.subCategories} subs
+                      </span>
+                    ) : (
+                      <span className="text-xs text-foreground/30 font-medium">None</span>
+                    )}
                   </td>
                   <td className="px-5 py-4">
-                    <span className="inline-flex items-center justify-center px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 font-bold text-xs">
-                      {cat._count.products}
+                    <span className="inline-flex items-center px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 font-bold text-xs">
+                      {cat._count?.products ?? 0}
                     </span>
                   </td>
                   <td className="px-5 py-4 text-right">
@@ -92,7 +107,7 @@ export default function CategoriesClient({ categories }: { categories: any[] }) 
               {categories.length === 0 && (
                 <tr>
                   <td colSpan={4} className="px-5 py-12 text-center text-muted-foreground font-medium">
-                     No categories found. Create one to begin.
+                     No categories found.
                   </td>
                 </tr>
               )}
